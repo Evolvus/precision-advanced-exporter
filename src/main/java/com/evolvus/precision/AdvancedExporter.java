@@ -59,7 +59,7 @@ public class AdvancedExporter {
     private String containerLocation = "container";
 
     //Connection Details
-    private HikariConfig cfg = null;
+    private HikariConfig hkConfig = null;
     private HikariDataSource ds = null;
 
     private DateTimeFormatter formatter =
@@ -84,10 +84,19 @@ public class AdvancedExporter {
           fileLocation = prop.getProperty("output.location");
           fileExtension = prop.getProperty("output.extension");
           containerLocation = prop.getProperty("input.container.location");
-          dbProperties = prop.getProperty("db.properties.file");
 
-          cfg = new HikariConfig(dbProperties);
-          ds = new HikariDataSource(cfg);
+          hkConfig = new HikariConfig();
+
+          hkConfig.setJdbcUrl(prop.getProperty("db.jdbcUrl"));
+          hkConfig.setUsername(prop.getProperty("db.user"));
+          hkConfig.setPassword(prop.getProperty("db.password"));
+          Integer mx = new Integer(prop.getProperty("db.maxPoolSize"));
+          hkConfig.setMaximumPoolSize(mx);
+          hkConfig.addDataSourceProperty("cachePrepStmts", prop.getProperty("db.cachePrepStmts"));
+          hkConfig.addDataSourceProperty("prepStmtCacheSize", prop.getProperty("db.prepStmtCacheSize"));
+          hkConfig.addDataSourceProperty("prepStmtCacheSqlLimit", prop.getProperty("db.prepStmtCacheSqlLimit"));
+
+          ds = new HikariDataSource(hkConfig);
 
 
 
@@ -103,21 +112,21 @@ public class AdvancedExporter {
         String csvFileName = getFileName(table);
 
 
-        //Connection con = null;
-        //PreparedStatement statement = null;
-        //ResultSet result = null;
+        Connection con = null;
+        PreparedStatement statement = null;
+        ResultSet result = null;
 
-        //BufferedWriter fileWriter;
+        BufferedWriter fileWriter;
 
 
         try{
 
-            Connection con = ds.getConnection();
+            con = ds.getConnection();
             String sql = "SELECT * FROM ".concat(table);
-            PreparedStatement statement = con.prepareStatement(sql);
-            ResultSet result = statement.executeQuery();
+            statement = con.prepareStatement(sql);
+            result = statement.executeQuery();
 
-            BufferedWriter fileWriter = new BufferedWriter(new FileWriter(csvFileName));
+            fileWriter = new BufferedWriter(new FileWriter(csvFileName));
             int columnCount = writeHeaderLine(result,fileWriter);
 
             while (result.next()) {
@@ -157,6 +166,8 @@ public class AdvancedExporter {
         } catch (IOException e) {
           Logger lgr = Logger.getLogger(AdvancedExporter.class.getName());
           lgr.log(Level.WARNING, e.getMessage(), e);
+        } finally{
+
         }
 
     }
