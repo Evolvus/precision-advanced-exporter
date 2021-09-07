@@ -1,3 +1,4 @@
 target/
-dist/data/
-dist/container/
+dist/data/*
+dist/container/*
+.DS_store
