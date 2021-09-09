@@ -34,6 +34,11 @@ import java.util.Properties;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
+import org.slf4j.Marker;
+
+import org.slf4j.MarkerFactory;
+
+
 import org.slf4j.LoggerFactory;
 
 
@@ -45,6 +50,7 @@ public class AdvancedExporter {
 
 
    private static Logger LOGGER = LoggerFactory.getLogger(AdvancedExporter.class);
+   private static Marker impMarker = MarkerFactory.getMarker("IMPORTANT");
 
 
     //Output
@@ -190,13 +196,13 @@ public class AdvancedExporter {
           String data = myReader.nextLine();
 
           Instant start = Instant.now();
-          LOGGER.info("Started extracting for table {} at {}",data,formatter.format( start ));
+          LOGGER.info("Started extracting for table {}",data);
 
           export(data);
 
           Instant end = Instant.now();
-          LOGGER.info("Finished extracting for table {} at {}",data,formatter.format( end ));
-          LOGGER.info("Time taken to extract table {} --> {} seconds",data,Duration.between(start, end).toMillis()/1000);
+          LOGGER.info("Finished extracting for table {} ",data);
+          LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds",data,Duration.between(start, end).toMillis()/1000);
 
         }
         myReader.close();
