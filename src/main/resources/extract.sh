@@ -1,3 +1,2 @@
 export CLASSPATH=./lib/.
-java -jar ./lib/advanced-exporter.jar
-
+java -jar ./lib/advanced-exporter-0.0.1.jar

@@ -103,11 +103,18 @@
                     <phase>package</phase>
                     <configuration>
                         <target>
-                            <echo>ANT TASK - copying files....</echo>
+                            <echo>ANT TASK - copying files Jar....</echo>
                             <copy todir="${basedir}/dist/lib" overwrite="true" flatten="true">
                                 <fileset dir="${basedir}" includes="*.bat" >
                                     <include name="target/*.jar" />
                                     <include name="target/lib/*.jar" />
+                                </fileset>
+                            </copy>
+                            <echo>ANT TASK - copying files properties and shell files....</echo>
+                            <copy todir="${basedir}/dist" overwrite="true" flatten="true">
+                                <fileset dir="${basedir}" includes="*.bat" >
+                                    <include name="target/classes/.properties" />
+                                    <include name="target/classes/extract.sh" />
                                 </fileset>
                             </copy>
 

@@ -116,10 +116,10 @@ public class AdvancedExporter {
       }
     }
 
-    public void export(String table) {
+    public int export(String table) {
       String csvFileName = getFileName(table);
       String sql = "SELECT * FROM ".concat(table);
-
+      int rec = 0;
       try(
         Connection con =
           ds.getConnection();
@@ -151,12 +151,15 @@ public class AdvancedExporter {
             }
             fileWriter.write(line);
             fileWriter.newLine();
+            rec += 1;
           }
         } catch (SQLException e) {
           LOGGER.error( "SQL Exception when exporting table {} {}",table,e.getMessage());
         } catch (IOException e) {
           LOGGER.error( "File Exception when exporting table {} {}",table,e.getMessage());
         }
+
+        return rec;
 
      }
 
@@ -173,43 +176,64 @@ public class AdvancedExporter {
     public void processContainerLocation(String loc){
 
       //LOGGER.info("This is an info level log message!");
+      try {
+        File file = new File(loc);
+        if(file.exists() == false){
+          LOGGER.error("Container folder does not exist  {} ",file.getAbsolutePath());
+          return;
+        }
+        File[] files = file.listFiles();
+        if(files.length == 0){
+          LOGGER.error("No files in container folder -   {} ",file.getAbsolutePath());
+          return;
+        }
+        LOGGER.info("Processing  Container Location {}",file.getAbsolutePath());
+        for(File f: files){
 
-      File file = new File(loc);
-      File[] files = file.listFiles();
-      LOGGER.info("Processing  Container Location {}",file.getAbsolutePath());
-      for(File f: files){
-        LOGGER.info("Processing Container File {}",f.getName());
-        new Thread(() -> {
-          processContainer(f.getAbsolutePath());
-        }).start();
+          new Thread(() -> {
+            LOGGER.info("Started processing Container File {}",f.getName());
+            int count = processContainer(f.getAbsolutePath());
+            LOGGER.info("Finished processing Container File {}. Total {} tables exported ",f.getName(),count);
+          }).start();
 
-
+      }
+      }catch (Exception e) {
+        LOGGER.error( "File Exception when opening container folder {} {}",loc,e.getMessage());
       }
 
     }
 
-    public void processContainer(String container){
+    public int processContainer(String container){
+      int count = 0;
       try {
         File f = new File(container);
         Scanner myReader = new Scanner(f);
+
         while (myReader.hasNextLine()) {
-          String data = myReader.nextLine();
+          String data = myReader.nextLine().trim();
+
+          if(data.length() == 0 || data.substring(0,1)=="#")
+            continue;
 
           Instant start = Instant.now();
           LOGGER.info("Started extracting for table {}",data);
 
-          export(data);
+          int rec = export(data);
 
           Instant end = Instant.now();
           LOGGER.info("Finished extracting for table {} ",data);
-          LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds",data,Duration.between(start, end).toMillis()/1000);
+          LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows extracted",data,Duration.between(start, end).toMillis()/1000,rec);
+
+          count +=1;
 
         }
         myReader.close();
 
-      } catch (FileNotFoundException e) {
+      } catch (IOException e) {
         LOGGER.error( "File Exception when processing container {} {}",container,e.getMessage(),e);
       }
+
+      return count;
 
     }
 
