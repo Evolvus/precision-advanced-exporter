@@ -222,7 +222,7 @@ public class AdvancedExporter {
 
           Instant end = Instant.now();
           LOGGER.info("Finished extracting for table {} ",data);
-          LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows extracted",data,Duration.between(start, end).toMillis()/1000,rec);
+          LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows exported ",data,Duration.between(start, end).toMillis()/1000,rec);
 
           count +=1;
 
