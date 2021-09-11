@@ -116,10 +116,12 @@ public class AdvancedExporter {
       }
     }
 
-    public int export(String table) {
+    public void export(String table) {
       String csvFileName = getFileName(table);
       String sql = "SELECT * FROM ".concat(table);
       int rec = 0;
+      Instant start = Instant.now();
+      LOGGER.info("Started extracting for table {}",table);
       try(
         Connection con =
           ds.getConnection();
@@ -159,7 +161,10 @@ public class AdvancedExporter {
           LOGGER.error( "File Exception when exporting table {} {}",table,e.getMessage());
         }
 
-        return rec;
+        Instant end = Instant.now();
+        LOGGER.info("Finished extracting for table {} ",table);
+        LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows exported ",table,Duration.between(start, end).toMillis()/1000,rec);
+
 
      }
 
@@ -187,13 +192,11 @@ public class AdvancedExporter {
           LOGGER.error("No files in container folder -   {} ",file.getAbsolutePath());
           return;
         }
-        LOGGER.info("Processing  Container Location {}",file.getAbsolutePath());
+        LOGGER.info("Processing  Container Location {} having {} container(s)",file.getAbsolutePath(),files.length);
         for(File f: files){
 
           new Thread(() -> {
-            LOGGER.info("Started processing Container File {}",f.getName());
-            int count = processContainer(f.getAbsolutePath());
-            LOGGER.info("Finished processing Container File {}. Total {} tables exported ",f.getName(),count);
+            processContainer(f.getAbsolutePath());
           }).start();
 
       }
@@ -203,8 +206,9 @@ public class AdvancedExporter {
 
     }
 
-    public int processContainer(String container){
+    public void processContainer(String container){
       int count = 0;
+      LOGGER.info("Started processing Container File {}",container);
       try {
         File f = new File(container);
         Scanner myReader = new Scanner(f);
@@ -214,16 +218,7 @@ public class AdvancedExporter {
 
           if(data.length() == 0 || data.substring(0,1)=="#")
             continue;
-
-          Instant start = Instant.now();
-          LOGGER.info("Started extracting for table {}",data);
-
-          int rec = export(data);
-
-          Instant end = Instant.now();
-          LOGGER.info("Finished extracting for table {} ",data);
-          LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows exported ",data,Duration.between(start, end).toMillis()/1000,rec);
-
+          export(data);
           count +=1;
 
         }
@@ -232,8 +227,7 @@ public class AdvancedExporter {
       } catch (IOException e) {
         LOGGER.error( "File Exception when processing container {} {}",container,e.getMessage(),e);
       }
-
-      return count;
+      LOGGER.info("Finished processing Container File {}. Total {} tables exported ",container,count);
 
     }
 

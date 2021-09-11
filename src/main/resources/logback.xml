@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration error="true" scan="true"> 
+<configuration error="true" scan="true">
 
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>
-                %d{HH:mm:ss} [%t] %-5level %logger{36} - %msg%n
-            </Pattern>
-
-        </layout>
+      <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <level>INFO</level>
+      </filter>
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern> %green([%thread]) %highlight(%level) %logger{50} - %msg%n</pattern>
+      </encoder>
     </appender>
 
 
@@ -117,7 +117,7 @@
       <appender-ref ref="fileInfo"/>
     </logger>
 
-    <logger name="ch.qos.logback" level="info" additivity="false">
+    <logger name="ch.qos.logback" level="debug" additivity="false">
       <appender-ref ref="fileError"/>
       <appender-ref ref="fileWarn"/>
       <appender-ref ref="fileDebug"/>
