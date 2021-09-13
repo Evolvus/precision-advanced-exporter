@@ -22,7 +22,7 @@ public class App
         .desc("Help on this tool usage")
         .required(false)
         .build());
-        
+
       options.addOption(Option.builder("f")
         .longOpt("containerFolder")
         .hasArg(true)
@@ -60,7 +60,7 @@ public class App
               formatter.printHelp( "extract", options );
 
             } else if(cmd.getOptions().length == 0){
-              System.out.println("No arguement supplied. Container from properties file will be used");
+              System.out.println("No argument supplied. Container from properties file will be used");
               exporter.processContainerLocation();
 
             } else if (cmd.hasOption("h")) {

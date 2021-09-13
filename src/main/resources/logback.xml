@@ -90,10 +90,8 @@
             <!-- 60 days to keep -->
             <maxHistory>60</maxHistory>
           </rollingPolicy>
-          <filter class="ch.qos.logback.classic.filter.LevelFilter">
+          <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
           </filter>
           <encoder>
               <pattern>%d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>

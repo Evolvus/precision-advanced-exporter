@@ -24,6 +24,16 @@ import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+
+import java.util.stream.Stream;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.function.Supplier;
+
+
 
 
 import com.zaxxer.hikari.HikariConfig;
@@ -108,9 +118,6 @@ public class AdvancedExporter {
 
           ds = new HikariDataSource(hkConfig);
 
-
-
-
       } catch (IOException e) {
           LOGGER.error( "Exception when loading properties file {} {}",config,e.getMessage(),e);
       }
@@ -132,7 +139,11 @@ public class AdvancedExporter {
         BufferedWriter fileWriter =
             new BufferedWriter(new FileWriter(csvFileName))
       ){
-          int columnCount = writeHeaderLine(result,fileWriter);
+          int columnCount = result.getMetaData().getColumnCount();
+
+          if(inclHeader){
+            writeHeaderLine(result,fileWriter);
+          }
           while (result.next()) {
             String line = "";
             for (int i = 1; i <= columnCount; i++) {
@@ -180,54 +191,53 @@ public class AdvancedExporter {
 
     public void processContainerLocation(String loc){
 
-      //LOGGER.info("This is an info level log message!");
-      try {
-        File file = new File(loc);
-        if(file.exists() == false){
-          LOGGER.error("Container folder does not exist  {} ",file.getAbsolutePath());
-          return;
-        }
-        File[] files = file.listFiles();
-        if(files.length == 0){
-          LOGGER.error("No files in container folder -   {} ",file.getAbsolutePath());
-          return;
-        }
-        LOGGER.info("Processing  Container Location {} having {} container(s)",file.getAbsolutePath(),files.length);
-        for(File f: files){
-
-          new Thread(() -> {
-            processContainer(f.getAbsolutePath());
-          }).start();
-
+      LOGGER.info("This is an info level log message!");
+      if(loc == null || !Files.exists(Paths.get(loc)) || !Files.isDirectory(Paths.get(loc))){
+        LOGGER.error("Container folder does not exist  {} ",loc);
+        return;
       }
-      }catch (Exception e) {
+
+      try (
+        Stream<Path> files = Files.list(Paths.get(loc))
+      ){
+
+       LOGGER.info("Processing  Container Location {} having {} container(s)",loc,Files.list(Paths.get(loc)).count());
+        files
+          .collect(Collectors.toList())//convert to list
+          .parallelStream()
+          .forEach(f -> processContainer(f.toAbsolutePath().toString())) ;
+
+      } catch (IOException e) {
         LOGGER.error( "File Exception when opening container folder {} {}",loc,e.getMessage());
       }
 
+
     }
 
+    //This method demostrates the beauty of functional programming
     public void processContainer(String container){
       int count = 0;
       LOGGER.info("Started processing Container File {}",container);
-      try {
-        File f = new File(container);
-        Scanner myReader = new Scanner(f);
-
-        while (myReader.hasNextLine()) {
-          String data = myReader.nextLine().trim();
-
-          if(data.length() == 0 || data.substring(0,1)=="#")
-            continue;
-          export(data);
-          count +=1;
-
-        }
-        myReader.close();
+      try (
+        Stream<String> lines =
+          Files
+            .lines(Paths.get(container))
+      ){
+          lines
+            .collect(Collectors.toList())//convert to list
+            .parallelStream() //create pallelstream for parallel processing
+            .map(String::trim) //trim all spaces
+            //filter comments or blank lines
+            .filter(l-> l.length() !=0 && !l.substring(0,1).equals("#"))
+            .forEach(l -> export(l)); //Call Export all parallel
 
       } catch (IOException e) {
         LOGGER.error( "File Exception when processing container {} {}",container,e.getMessage(),e);
       }
+
+
       LOGGER.info("Finished processing Container File {}. Total {} tables exported ",container,count);
+
 
     }
 
@@ -246,7 +256,6 @@ public class AdvancedExporter {
           }
           fileWriter.write(headerLine.substring(0, headerLine.length() - 1));
           fileWriter.newLine();
-
 
         }
 
