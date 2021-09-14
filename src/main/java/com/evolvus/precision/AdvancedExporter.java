@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
@@ -128,7 +130,7 @@ public class AdvancedExporter {
     public void exportData(String table) {
       String csvFileName = getFileName(table);
       String sql = "SELECT * FROM ".concat(table);
-      int rec = 0;
+      long rec = 0;
 
       Instant start = Instant.now();
       LOGGER.info("Started extracting for table {}",table);
@@ -145,6 +147,8 @@ public class AdvancedExporter {
       ){
 
         writer.writeAll(result, inclHeader);
+        rec = Files.lines(Paths.get(csvFileName)).count();
+
       }catch (SQLException e) {
         LOGGER.error( "SQL Exception when exporting table {} {}",table,e.getMessage());
       } catch (IOException e) {
@@ -199,20 +203,23 @@ public class AdvancedExporter {
 
     //This method demostrates the beauty of functional programming
     public void processContainer(String container){
-      int count = 0;
+      AtomicLong count = new AtomicLong();
       LOGGER.info("Started processing Container File {}",container);
       try (
         Stream<String> lines =
           Files
             .lines(Paths.get(container))
       ){
-          lines
-            .collect(Collectors.toList())//convert to list
-            .parallelStream() //create pallelstream for parallel processing
-            .map(String::trim) //trim all spaces
-            //filter comments or blank lines
-            .filter(l-> l.length() !=0 && !l.substring(0,1).equals("#"))
-            .forEach(l -> exportData(l)); //Call Export all parallel
+
+
+            lines
+              .collect(Collectors.toList())//convert to list
+              .parallelStream() //create pallelstream for parallel processing
+              .map(String::trim) //trim all spaces
+              //filter comments or blank lines
+              .filter(l-> l.length() !=0 && !l.substring(0,1).equals("#"))
+              .peek(l ->  count.incrementAndGet()) //Call Export all parallel
+              .forEach(l -> exportData(l)); //Call Export all parallel
 
       } catch (IOException e) {
         LOGGER.error( "File Exception when processing container {} {}",container,e.getMessage(),e);
