@@ -1,4 +1,5 @@
 target/
 dist/data/*
 dist/container/*
+dist/log/
 .DS_store
