@@ -83,7 +83,7 @@ public class App
 
               } else if (cmd.hasOption("t")) {
                 String table = cmd.getOptionValue("t");
-                exporter.export(table);
+                exporter.exportData(table);
               } else {
                 System.out.println("Invalid Option");
 

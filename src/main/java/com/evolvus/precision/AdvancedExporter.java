@@ -160,61 +160,7 @@ public class AdvancedExporter {
 
     }
 
-    public void export(String table) {
-      String csvFileName = getFileName(table);
-      String sql = "SELECT * FROM ".concat(table);
-      int rec = 0;
-      Instant start = Instant.now();
-      LOGGER.info("Started extracting for table {}",table);
-      try(
-        Connection con =
-          ds.getConnection();
-        PreparedStatement statement =
-              con.prepareStatement(sql);
-        ResultSet result =
-              statement.executeQuery();
-        BufferedWriter fileWriter =
-            new BufferedWriter(new FileWriter(csvFileName))
-      ){
-          int columnCount = result.getMetaData().getColumnCount();
 
-          if(inclHeader){
-            writeHeaderLine(result,fileWriter);
-          }
-          while (result.next()) {
-            String line = "";
-            for (int i = 1; i <= columnCount; i++) {
-              Object valueObject = result.getObject(i);
-              String valueString = "";
-
-              if (valueObject != null) valueString = valueObject.toString();
-
-              if (valueObject instanceof String) {
-                  valueString = escapeDoubleQuotes(valueString);
-              }
-
-              line = line.concat(valueString);
-
-              if (i != columnCount) {
-                  line = line.concat(delimiter);
-              }
-            }
-            fileWriter.write(line);
-            fileWriter.newLine();
-            rec += 1;
-          }
-        } catch (SQLException e) {
-          LOGGER.error( "SQL Exception when exporting table {} {}",table,e.getMessage());
-        } catch (IOException e) {
-          LOGGER.error( "File Exception when exporting table {} {}",table,e.getMessage());
-        }
-
-        Instant end = Instant.now();
-        LOGGER.info("Finished extracting for table {} ",table);
-        LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows exported ",table,Duration.between(start, end).toMillis()/1000,rec);
-
-
-     }
 
     private String getFileName(String baseName) {
 
@@ -266,7 +212,7 @@ public class AdvancedExporter {
             .map(String::trim) //trim all spaces
             //filter comments or blank lines
             .filter(l-> l.length() !=0 && !l.substring(0,1).equals("#"))
-            .forEach(l -> export(l)); //Call Export all parallel
+            .forEach(l -> exportData(l)); //Call Export all parallel
 
       } catch (IOException e) {
         LOGGER.error( "File Exception when processing container {} {}",container,e.getMessage(),e);
