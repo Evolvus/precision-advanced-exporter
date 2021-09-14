@@ -256,3 +256,20 @@
 17:52:49.712 INFO  c.evolvus.precision.AdvancedExporter - Time taken to extract table mtx --> 11 seconds. 237431 rows exported 
 17:52:49.712 INFO  c.evolvus.precision.AdvancedExporter - Time taken to extract table mtx --> 11 seconds. 237416 rows exported 
 17:52:49.714 INFO  c.evolvus.precision.AdvancedExporter - Finished processing Container File /Users/prashantm/development/java/extract/mvn/advanced-exporter/dist/container/a.txt. Total 5 tables exported 
+#logback.classic pattern: %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+17:56:10.759 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+17:56:11.843 INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+17:56:11.845 INFO  c.evolvus.precision.AdvancedExporter - This is an info level log message!
+17:56:11.863 INFO  c.evolvus.precision.AdvancedExporter - Processing  Container Location container having 1 container(s)
+17:56:11.883 INFO  c.evolvus.precision.AdvancedExporter - Started processing Container File /Users/prashantm/development/java/extract/mvn/advanced-exporter/dist/container/a.txt
+17:56:11.910 INFO  c.evolvus.precision.AdvancedExporter - Started extracting for table project_invoices
+17:56:11.910 INFO  c.evolvus.precision.AdvancedExporter - Started extracting for table mtx
+17:56:11.911 INFO  c.evolvus.precision.AdvancedExporter - Started extracting for table mtx
+17:56:11.910 INFO  c.evolvus.precision.AdvancedExporter - Started extracting for table project_details,asdfasdf,asdfasdf,asdfasdf
+17:56:12.164 INFO  c.evolvus.precision.AdvancedExporter - Finished extracting for table project_details,asdfasdf,asdfasdf,asdfasdf 
+17:56:12.167 INFO  c.evolvus.precision.AdvancedExporter - Time taken to extract table project_details,asdfasdf,asdfasdf,asdfasdf --> 0 seconds. 0 rows exported 
+17:56:12.167 INFO  c.evolvus.precision.AdvancedExporter - Started extracting for table project_cr
+17:56:12.179 INFO  c.evolvus.precision.AdvancedExporter - Finished extracting for table project_invoices 
+17:56:12.179 INFO  c.evolvus.precision.AdvancedExporter - Time taken to extract table project_invoices --> 0 seconds. 0 rows exported 
+17:56:12.967 INFO  c.evolvus.precision.AdvancedExporter - Finished extracting for table project_cr 
+17:56:12.967 INFO  c.evolvus.precision.AdvancedExporter - Time taken to extract table project_cr --> 0 seconds. 369 rows exported 

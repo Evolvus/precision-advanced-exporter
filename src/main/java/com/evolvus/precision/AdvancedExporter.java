@@ -17,9 +17,8 @@ import java.util.Locale;
 import java.time.format.FormatStyle;
 import java.time.Duration;
 
-import java.io.File;
+
 import java.io.FileWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -30,9 +29,7 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 
 import java.util.stream.Stream;
-import java.util.List;
 import java.util.stream.Collectors;
-import java.util.function.Supplier;
 
 import com.opencsv.CSVWriter;
 
@@ -42,9 +39,7 @@ import com.opencsv.CSVWriter;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-import java.util.Date;
 import java.util.Properties;
-import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.Marker;
@@ -62,7 +57,7 @@ Precision 100 Advanced Exporter
 public class AdvancedExporter {
 
 
-   private static Logger LOGGER = LoggerFactory.getLogger(AdvancedExporter.class);
+   private static final Logger LOGGER = LoggerFactory.getLogger(AdvancedExporter.class);
    private static Marker impMarker = MarkerFactory.getMarker("IMPORTANT");
 
 
