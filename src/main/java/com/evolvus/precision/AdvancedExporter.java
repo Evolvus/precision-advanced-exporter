@@ -146,7 +146,15 @@ public class AdvancedExporter {
       ){
 
         writer.writeAll(result, inclHeader);
-        rec = Files.lines(Paths.get(csvFileName)).count();
+        try(
+          Stream<String> lines =
+            Files.lines(Paths.get(csvFileName))
+        ){
+          rec = lines.count();
+        }catch (IOException e) {
+          LOGGER.error( "File Exception when exporting table {} {}",table,e.getMessage());
+        }
+
 
       }catch (SQLException e) {
         LOGGER.error( "SQL Exception when exporting table {} {}",table,e.getMessage());
