@@ -1,7 +1,6 @@
 package com.evolvus.precision;
 
 
-import java.lang.Thread;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -185,10 +184,11 @@ public class AdvancedExporter {
       }
 
       try (
-        Stream<Path> files = Files.list(Paths.get(loc))
+        Stream<Path> files = Files.list(Paths.get(loc));
+        Stream<Path> filesCount  =Files.list(Paths.get(loc));
       ){
 
-       LOGGER.info("Processing  Container Location {} having {} container(s)",loc,Files.list(Paths.get(loc)).count());
+       LOGGER.info("Processing  Container Location {} having {} container(s)",loc,filesCount.count());
         files
           .collect(Collectors.toList())//convert to list
           .parallelStream()
