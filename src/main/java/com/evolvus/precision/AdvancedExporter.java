@@ -72,8 +72,7 @@ public class AdvancedExporter {
     private String fileExtension = "txt";
 
 
-    //JDBC
-    private String dbProperties  = "db.properties";
+
     //Input
     private String containerLocation = "container";
 
@@ -81,10 +80,7 @@ public class AdvancedExporter {
     private HikariConfig hkConfig = null;
     private HikariDataSource ds = null;
 
-    private DateTimeFormatter formatter =
-    DateTimeFormatter.ofLocalizedDateTime( FormatStyle.SHORT, FormatStyle.MEDIUM )
-                     .withLocale( Locale.UK )
-                     .withZone( ZoneId.systemDefault() );
+
 
 
     public  AdvancedExporter(String config){
@@ -96,7 +92,7 @@ public class AdvancedExporter {
           prop.load(input);
 
           // get the property value
-          inclHeader = prop.getProperty("output.include_header").equals("YES")?true:false;
+          inclHeader = prop.getProperty("output.include_header").equals("YES");
           delimiter = prop.getProperty("output.delimiter");
           fileNamePrefix = prop.getProperty("output.prefix");
           fileNameSuffix = prop.getProperty("output.suffix");
@@ -221,8 +217,10 @@ public class AdvancedExporter {
               .map(String::trim) //trim all spaces
               //filter comments or blank lines
               .filter(l-> l.length() !=0 && !l.substring(0,1).equals("#"))
-              .peek(l ->  count.incrementAndGet()) //Call Export all parallel
-              .forEach(l -> exportData(l)); //Call Export all parallel
+              .forEach(l -> {
+                  exportData(l);
+                  count.incrementAndGet();
+                }); //Call Export all parallel
 
       } catch (IOException e) {
         LOGGER.error( "File Exception when processing container {} {}",container,e.getMessage(),e);
@@ -234,26 +232,7 @@ public class AdvancedExporter {
 
     }
 
-    private int writeHeaderLine(ResultSet result,BufferedWriter fileWriter) throws SQLException, IOException {
-        // write header line containing column names
-        ResultSetMetaData metaData = result.getMetaData();
-        int numberOfColumns = metaData.getColumnCount();
-        String headerLine = "";
-
-        // exclude the first column which is the ID field
-
-        if(inclHeader){
-          for (int i = 1; i <= numberOfColumns; i++) {
-              String columnName = metaData.getColumnName(i);
-              headerLine = headerLine.concat(columnName).concat(",");
-          }
-          fileWriter.write(headerLine.substring(0, headerLine.length() - 1));
-          fileWriter.newLine();
-
-        }
-
-        return numberOfColumns;
-    }
+    
 
     private String escapeDoubleQuotes(String value) {
         return value.replaceAll("\"", "\"\"");

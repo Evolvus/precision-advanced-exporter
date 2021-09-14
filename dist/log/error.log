@@ -32,3 +32,9 @@
 #logback.classic pattern: %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
 17:56:12.163 ERROR c.evolvus.precision.AdvancedExporter - SQL Exception when exporting table project_details,asdfasdf,asdfasdf,asdfasdf Not unique table/alias: 'asdfasdf'
 17:56:12.178 ERROR c.evolvus.precision.AdvancedExporter - SQL Exception when exporting table project_invoices Table 'project_management.project_invoices' doesn't exist
+#logback.classic pattern: %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+18:04:19.251 ERROR c.evolvus.precision.AdvancedExporter - SQL Exception when exporting table project_invoices Table 'project_management.project_invoices' doesn't exist
+18:04:19.251 ERROR c.evolvus.precision.AdvancedExporter - SQL Exception when exporting table project_details,asdfasdf,asdfasdf,asdfasdf Not unique table/alias: 'asdfasdf'
+#logback.classic pattern: %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+18:06:24.805 ERROR c.evolvus.precision.AdvancedExporter - SQL Exception when exporting table project_details,asdfasdf,asdfasdf,asdfasdf Not unique table/alias: 'asdfasdf'
+18:06:24.818 ERROR c.evolvus.precision.AdvancedExporter - SQL Exception when exporting table project_invoices Table 'project_management.project_invoices' doesn't exist
