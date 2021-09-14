@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.function.Supplier;
 
+import com.opencsv.CSVWriter;
+
 
 
 
@@ -121,6 +123,41 @@ public class AdvancedExporter {
       } catch (IOException e) {
           LOGGER.error( "Exception when loading properties file {} {}",config,e.getMessage(),e);
       }
+    }
+
+    public void exportData(String table) {
+      String csvFileName = getFileName(table);
+      String sql = "SELECT * FROM ".concat(table);
+      int rec = 0;
+
+      Instant start = Instant.now();
+      LOGGER.info("Started extracting for table {}",table);
+
+      try(
+        Connection con =
+          ds.getConnection();
+        PreparedStatement statement =
+          con.prepareStatement(sql);
+        ResultSet result =
+          statement.executeQuery();
+        CSVWriter writer =
+          new CSVWriter(new FileWriter(csvFileName), delimiter.charAt(0) );
+      ){
+
+        writer.writeAll(result, inclHeader);
+      }catch (SQLException e) {
+        LOGGER.error( "SQL Exception when exporting table {} {}",table,e.getMessage());
+      } catch (IOException e) {
+        LOGGER.error( "File Exception when exporting table {} {}",table,e.getMessage());
+      }
+
+
+
+      Instant end = Instant.now();
+      LOGGER.info("Finished extracting for table {} ",table);
+      LOGGER.info(impMarker,"Time taken to extract table {} --> {} seconds. {} rows exported ",table,Duration.between(start, end).toMillis()/1000,rec);
+
+
     }
 
     public void export(String table) {
