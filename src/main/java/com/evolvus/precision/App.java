@@ -9,9 +9,15 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 
 public class App
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+
     public static void main( String[] args )
     {
       Options options = new Options();
@@ -48,18 +54,18 @@ public class App
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = null;
 
-        System.out.println("Welcome to Advanced Extractor");
+        LOGGER.info("Welcome to Advanced Extractor");
 
         try {
             AdvancedExporter exporter = new AdvancedExporter(".properties");
             cmd = parser.parse(options, args);
             if(cmd.getArgs().length != 0) {
-              System.out.println("Invalid Parameters");
+              LOGGER.info("Invalid Parameters");
               HelpFormatter formatter = new HelpFormatter();
               formatter.printHelp( "extract", options );
 
             } else if(cmd.getOptions().length == 0){
-              System.out.println("No argument supplied. Container from properties file will be used");
+              LOGGER.info("No argument supplied. Container from properties file will be used");
               exporter.processContainerLocation();
 
             } else if (cmd.hasOption("h")) {
@@ -68,7 +74,7 @@ public class App
             } else if (cmd.hasOption("f")) {
                 String containerFolder = cmd.getOptionValue("f");
                 if (cmd.hasOption("c") || cmd.hasOption("t")) {
-                    System.out.println("Container / table option is ignored because container folder is defined");
+                    LOGGER.info("Container / table option is ignored because container folder is defined");
                 }
                 exporter.processContainerLocation(containerFolder);
 
@@ -76,7 +82,7 @@ public class App
             } else if (cmd.hasOption("c")) {
               String container = cmd.getOptionValue("c");
                 if (cmd.hasOption("t")) {
-                    System.out.println("Table option is omitted because container is defined");
+                    LOGGER.info("Table option is omitted because container is defined");
                 }
                 exporter.processContainer(container);
 
@@ -84,14 +90,14 @@ public class App
                 String table = cmd.getOptionValue("t");
                 exporter.exportData(table);
               } else {
-                System.out.println("Invalid Option");
+                LOGGER.info("Invalid Option");
 
                 HelpFormatter formatter = new HelpFormatter();
                 formatter.printHelp( "extract", options );
             }
 
           } catch (ParseException pe) {
-            System.out.println("Invalid command-line arguments!");
+            LOGGER.error("Invalid command-line arguments!");
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp( "extract", options );
             System.exit(1);

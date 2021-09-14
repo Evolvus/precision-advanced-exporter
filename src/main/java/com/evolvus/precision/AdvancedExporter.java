@@ -3,7 +3,6 @@ package com.evolvus.precision;
 
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -11,16 +10,11 @@ import java.sql.Connection;
 import java.util.concurrent.atomic.AtomicLong;
 
 import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
-import java.util.Locale;
-import java.time.format.FormatStyle;
 import java.time.Duration;
 
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.BufferedWriter;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
@@ -232,11 +226,9 @@ public class AdvancedExporter {
 
     }
 
-    
 
-    private String escapeDoubleQuotes(String value) {
-        return value.replaceAll("\"", "\"\"");
-    }
+
+  
 
 
 }
