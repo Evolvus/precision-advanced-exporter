@@ -7,7 +7,7 @@
         <level>INFO</level>
       </filter>
       <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-        <pattern> %green([%thread]) %highlight(%level) %logger{50} - %msg%n</pattern>
+        <pattern> %green([%thread]) %highlight(%level) - %msg%n</pattern>
       </encoder>
     </appender>
 

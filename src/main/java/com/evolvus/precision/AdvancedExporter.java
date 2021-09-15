@@ -188,7 +188,6 @@ public class AdvancedExporter {
 
     public void processContainerLocation(String loc){
 
-      LOGGER.info("This is an info level log message!");
       if(loc == null || !Files.exists(Paths.get(loc)) || !Files.isDirectory(Paths.get(loc))){
         LOGGER.error("Container folder does not exist  {} ",loc);
         return;
