@@ -113,7 +113,7 @@ public class AdvancedExporter {
 
 
 
-    private long FileCount(String file){
+    private long fileCount(String file){
       long rec = 0;
       try(
         Stream<String> lines =
@@ -148,7 +148,7 @@ public class AdvancedExporter {
       ){
 
         writer.writeAll(result, inclHeader);
-        rec = FileCount(csvFileName);
+        rec = fileCount(csvFileName);
 
 
 

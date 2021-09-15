@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 public class App
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
+    private static final String EXTRACT_CONST = "extract";
 
     public static void main( String[] args )
     {
@@ -62,7 +63,7 @@ public class App
             if(cmd.getArgs().length != 0) {
               LOGGER.info("Invalid Parameters");
               HelpFormatter formatter = new HelpFormatter();
-              formatter.printHelp( "extract", options );
+              formatter.printHelp( EXTRACT_CONST, options );
 
             } else if(cmd.getOptions().length == 0){
               LOGGER.info("No argument supplied. Container from properties file will be used");
@@ -70,7 +71,7 @@ public class App
 
             } else if (cmd.hasOption("h")) {
               HelpFormatter formatter = new HelpFormatter();
-              formatter.printHelp( "extract", options );
+              formatter.printHelp( EXTRACT_CONST, options );
             } else if (cmd.hasOption("f")) {
                 String containerFolder = cmd.getOptionValue("f");
                 if (cmd.hasOption("c") || cmd.hasOption("t")) {
@@ -93,13 +94,13 @@ public class App
                 LOGGER.info("Invalid Option");
 
                 HelpFormatter formatter = new HelpFormatter();
-                formatter.printHelp( "extract", options );
+                formatter.printHelp( EXTRACT_CONST, options );
             }
 
           } catch (ParseException pe) {
             LOGGER.error("Invalid command-line arguments!");
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp( "extract", options );
+            formatter.printHelp( EXTRACT_CONST, options );
             System.exit(1);
           }
 
