@@ -122,8 +122,8 @@ public class AdvancedExporter {
           Files.lines(Paths.get(file))
       ){
         rec = lines.count();
-      }catch (IOException e) {
-        LOGGER.error( "File Exception when finding line count of  {} {}",file,e.getMessage());
+      } catch (IOException e) {
+        LOGGER.error( "File Exception when finding line count of  {} {}",file,e.getMessage(),e);
       }
 
       return rec;
@@ -148,7 +148,7 @@ public class AdvancedExporter {
 
 
         CSVWriter writer = new CSVWriter(
-          new OutputStreamWriter(new FileOutputStream("example.csv"), StandardCharsets.UTF_8),
+          new OutputStreamWriter(new FileOutputStream(csvFileName), StandardCharsets.UTF_8),
           delimiter.charAt(0) ,
           CSVWriter.DEFAULT_QUOTE_CHARACTER,
           CSVWriter.DEFAULT_ESCAPE_CHARACTER,
