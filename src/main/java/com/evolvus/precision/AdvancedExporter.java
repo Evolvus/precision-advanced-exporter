@@ -77,7 +77,7 @@ public class AdvancedExporter {
 
 
 
-    public  AdvancedExporter(String config){
+    public AdvancedExporter(String config){
       try (InputStream input = new FileInputStream(config)) {
 
           Properties prop = new Properties();
@@ -111,6 +111,23 @@ public class AdvancedExporter {
       }
     }
 
+
+
+    private long FileCount(String file){
+      long rec = 0;
+      try(
+        Stream<String> lines =
+          Files.lines(Paths.get(file))
+      ){
+        rec = lines.count();
+      }catch (IOException e) {
+        LOGGER.error( "File Exception when finding line count of  {} {}",file,e.getMessage());
+      }
+
+      return rec;
+
+    }
+
     public void exportData(String table) {
       String csvFileName = getFileName(table);
       String sql = "SELECT * FROM ".concat(table);
@@ -131,14 +148,8 @@ public class AdvancedExporter {
       ){
 
         writer.writeAll(result, inclHeader);
-        try(
-          Stream<String> lines =
-            Files.lines(Paths.get(csvFileName))
-        ){
-          rec = lines.count();
-        }catch (IOException e) {
-          LOGGER.error( "File Exception when exporting table {} {}",table,e.getMessage());
-        }
+        rec = FileCount(csvFileName);
+
 
 
       }catch (SQLException e) {
@@ -228,7 +239,7 @@ public class AdvancedExporter {
 
 
 
-  
+
 
 
 }
