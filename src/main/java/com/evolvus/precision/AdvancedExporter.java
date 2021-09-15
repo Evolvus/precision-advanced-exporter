@@ -13,7 +13,6 @@ import java.time.Instant;
 import java.time.Duration;
 
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
@@ -146,8 +145,8 @@ public class AdvancedExporter {
           con.prepareStatement(sql);
         ResultSet result =
           statement.executeQuery();
-        // CSVWriter writer =
-        //   new CSVWriter(new FileWriter(csvFileName), delimiter.charAt(0) );
+
+
         CSVWriter writer = new CSVWriter(
           new OutputStreamWriter(new FileOutputStream("example.csv"), StandardCharsets.UTF_8),
           delimiter.charAt(0) ,

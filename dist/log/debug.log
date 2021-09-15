@@ -2148,3 +2148,93 @@
 16:19:02.123 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@62c6f301
 16:19:02.146 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7d08c03d
 16:19:02.170 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@50806bfd
+#logback.classic pattern: %d{HH:mm:ss.SSS} %-5level %logger{36} - %msg%n
+16:27:13.985 DEBUG com.zaxxer.hikari.HikariConfig - HikariPool-1 - configuration:
+16:27:13.992 DEBUG com.zaxxer.hikari.HikariConfig - allowPoolSuspension................................false
+16:27:13.992 DEBUG com.zaxxer.hikari.HikariConfig - autoCommit................................true
+16:27:13.996 DEBUG com.zaxxer.hikari.HikariConfig - catalog................................none
+16:27:13.996 DEBUG com.zaxxer.hikari.HikariConfig - connectionInitSql................................none
+16:27:13.997 DEBUG com.zaxxer.hikari.HikariConfig - connectionTestQuery................................none
+16:27:13.997 DEBUG com.zaxxer.hikari.HikariConfig - connectionTimeout................................30000
+16:27:13.997 DEBUG com.zaxxer.hikari.HikariConfig - dataSource................................none
+16:27:13.997 DEBUG com.zaxxer.hikari.HikariConfig - dataSourceClassName................................none
+16:27:13.997 DEBUG com.zaxxer.hikari.HikariConfig - dataSourceJNDI................................none
+16:27:14.070 DEBUG com.zaxxer.hikari.HikariConfig - dataSourceProperties................................{password=<masked>, prepStmtCacheSqlLimit=2048, cachePrepStmts=true, prepStmtCacheSize=250}
+16:27:14.071 DEBUG com.zaxxer.hikari.HikariConfig - driverClassName................................none
+16:27:14.071 DEBUG com.zaxxer.hikari.HikariConfig - exceptionOverrideClassName................................none
+16:27:14.071 DEBUG com.zaxxer.hikari.HikariConfig - healthCheckProperties................................{}
+16:27:14.071 DEBUG com.zaxxer.hikari.HikariConfig - healthCheckRegistry................................none
+16:27:14.071 DEBUG com.zaxxer.hikari.HikariConfig - idleTimeout................................600000
+16:27:14.072 DEBUG com.zaxxer.hikari.HikariConfig - initializationFailTimeout................................1
+16:27:14.072 DEBUG com.zaxxer.hikari.HikariConfig - isolateInternalQueries................................false
+16:27:14.072 DEBUG com.zaxxer.hikari.HikariConfig - jdbcUrl................................jdbc:mysql://localhost:3306/project_management?zeroDateTimeBehavior=convertToNull
+16:27:14.072 DEBUG com.zaxxer.hikari.HikariConfig - keepaliveTime................................0
+16:27:14.072 DEBUG com.zaxxer.hikari.HikariConfig - leakDetectionThreshold................................0
+16:27:14.072 DEBUG com.zaxxer.hikari.HikariConfig - maxLifetime................................1800000
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - maximumPoolSize................................50
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - metricRegistry................................none
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - metricsTrackerFactory................................none
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - minimumIdle................................50
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - password................................<masked>
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - poolName................................"HikariPool-1"
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - readOnly................................false
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - registerMbeans................................false
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - scheduledExecutor................................none
+16:27:14.073 DEBUG com.zaxxer.hikari.HikariConfig - schema................................none
+16:27:14.074 DEBUG com.zaxxer.hikari.HikariConfig - threadFactory................................internal
+16:27:14.074 DEBUG com.zaxxer.hikari.HikariConfig - transactionIsolation................................default
+16:27:14.074 DEBUG com.zaxxer.hikari.HikariConfig - username................................"root"
+16:27:14.074 DEBUG com.zaxxer.hikari.HikariConfig - validationTimeout................................5000
+16:27:14.368 DEBUG c.z.hikari.util.DriverDataSource - Loaded driver with class name com.mysql.cj.jdbc.Driver for jdbcUrl=jdbc:mysql://localhost:3306/project_management?zeroDateTimeBehavior=convertToNull
+16:27:15.027 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@72967906
+16:27:15.130 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Pool stats (total=1, active=1, idle=0, waiting=3)
+16:27:15.203 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Add connection elided, waiting 3, queue 49
+16:27:15.209 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@78ae702a
+16:27:15.293 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7fe2b17f
+16:27:15.430 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7ff9189
+16:27:15.486 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@37803592
+16:27:15.542 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59cd272e
+16:27:15.576 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1224c188
+16:27:15.654 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@44a95881
+16:27:15.672 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1dbbd2ee
+16:27:15.689 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3ce63c28
+16:27:15.707 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2d3670b2
+16:27:15.725 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@74d4914f
+16:27:15.802 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4b984ddf
+16:27:15.824 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@68863329
+16:27:15.939 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a64390b
+16:27:16.010 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@476a46ec
+16:27:16.034 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4e10e288
+16:27:16.059 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5f05141
+16:27:16.076 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@406454b2
+16:27:16.093 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@16b459db
+16:27:16.155 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@32657b45
+16:27:16.177 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5c7fad97
+16:27:16.229 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@265d86f6
+16:27:16.260 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@65e2707d
+16:27:16.283 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4b353639
+16:27:16.302 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7ac6a213
+16:27:16.320 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@32c9bcf0
+16:27:16.338 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7bd4785f
+16:27:16.358 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2ae57d31
+16:27:16.534 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a29d07b
+16:27:16.561 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5dcc1414
+16:27:16.583 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@716a978a
+16:27:16.607 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@1f9b1030
+16:27:16.664 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@ec2c6fa
+16:27:16.684 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3d47ea1c
+16:27:16.971 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@28604b
+16:27:16.999 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2b711a9c
+16:27:17.027 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5cecb6b6
+16:27:17.042 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7692ab6b
+16:27:17.061 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@7d7c41b0
+16:27:17.080 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c4502c3
+16:27:17.100 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@572780ae
+16:27:17.144 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6564ec12
+16:27:17.170 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@fab3023
+16:27:17.195 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@712daab9
+16:27:17.212 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@54b7d5c9
+16:27:17.229 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@25f08808
+16:27:17.279 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@13a8ff5d
+16:27:17.299 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f1f32d5
+16:27:17.322 DEBUG com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@59c1fd12
