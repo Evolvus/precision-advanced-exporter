@@ -15,12 +15,15 @@ import java.time.Duration;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.InputStream;
+import java.io.FileInputStream;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
 
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
@@ -143,14 +146,19 @@ public class AdvancedExporter {
           con.prepareStatement(sql);
         ResultSet result =
           statement.executeQuery();
-        CSVWriter writer =
-          new CSVWriter(new FileWriter(csvFileName), delimiter.charAt(0) );
+        // CSVWriter writer =
+        //   new CSVWriter(new FileWriter(csvFileName), delimiter.charAt(0) );
+        CSVWriter writer = new CSVWriter(
+          new OutputStreamWriter(new FileOutputStream("example.csv"), StandardCharsets.UTF_8),
+          delimiter.charAt(0) ,
+          CSVWriter.DEFAULT_QUOTE_CHARACTER,
+          CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+          CSVWriter.DEFAULT_LINE_END
+        );
       ){
 
         writer.writeAll(result, inclHeader);
         rec = fileCount(csvFileName);
-
-
 
       }catch (SQLException e) {
         LOGGER.error( "SQL Exception when exporting table {} {}",table,e.getMessage());
