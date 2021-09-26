@@ -89,7 +89,7 @@ public class AdvancedExporter {
        AdvancedExporter exporter = new AdvancedExporter(this.propertiesFile);
        exporter.operation = this.operation;
        exporter.operationName = this.operationName;
-       LOGGER.info("Building with properties file {} operation {} operation name {}",this.propertiesFile, exporter.operation.toString(),  exporter.operationName);
+       LOGGER.info("Building with properties file {} operation {} operation name {}",this.propertiesFile, exporter.operation,  exporter.operationName);
        return exporter;
 
      }

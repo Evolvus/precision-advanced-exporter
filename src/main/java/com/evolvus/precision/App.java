@@ -81,7 +81,6 @@ public class App
           printDefault("Help Requested",options);
         } else if(cmd.getOptions().length == 0){
           LOGGER.info("No argument supplied. Container from properties file will be used");
-          //exporter.processContainerLocation();
           return new Handler(AdvancedExporter.Operation.CONTAINER_FOLDER , "");
 
         } else if (cmd.hasOption("f")) {
@@ -89,18 +88,15 @@ public class App
             if (cmd.hasOption("c") || cmd.hasOption("t")) {
                 LOGGER.info("Container / table option is ignored because container folder is defined");
             }
-            //exporter.processContainerLocation(containerFolder);
             return new Handler(AdvancedExporter.Operation.CONTAINER_FOLDER , cmd.getOptionValue("f"));
 
         } else if (cmd.hasOption("c")) {
             if (cmd.hasOption("t")) {
                 LOGGER.info("Table option is omitted because container is defined");
             }
-            //exporter.processContainer(container);
             return new Handler(AdvancedExporter.Operation.CONTAINER , cmd.getOptionValue("c"));
 
         } else if (cmd.hasOption("t")) {
-          //exporter.exportData(table);
           return new Handler(AdvancedExporter.Operation.TABLE , cmd.getOptionValue("t"));
 
         } else {
