@@ -47,6 +47,25 @@ public class App
       }
     }
 
+
+    public static void main( String[] args ){
+
+      LOGGER.info("Welcome to Advanced Extractor");
+      Handler oper = parseArgument(args);
+      if( oper.getOper() == AdvancedExporter.Operation.NO_OPERATION){
+        System.exit(1);
+      }
+
+      AdvancedExporter exporter = new AdvancedExporter.Builder(".properties")
+                        .withOperation(oper.getOper())
+                        .withOperationName(oper.getOperationName())
+                        .build();
+
+      exporter.execute();
+
+
+    }
+
     public static Handler parseArgument(String[] args) {
       Options options = new Options();
 
@@ -58,21 +77,14 @@ public class App
 
         if(cmd.getArgs().length != 0){
           printDefault("Unrecognized Parameter",options);
-        }
-
-        if (cmd.hasOption("h")){
+        } else if (cmd.hasOption("h")){
           printDefault("Help Requested",options);
-        }
-
-        //AdvancedExporter exporter = new AdvancedExporter(".properties");
-
-        if(cmd.getOptions().length == 0){
+        } else if(cmd.getOptions().length == 0){
           LOGGER.info("No argument supplied. Container from properties file will be used");
           //exporter.processContainerLocation();
           return new Handler(AdvancedExporter.Operation.CONTAINER_FOLDER , "");
 
-        }
-        if (cmd.hasOption("f")) {
+        } else if (cmd.hasOption("f")) {
 
             if (cmd.hasOption("c") || cmd.hasOption("t")) {
                 LOGGER.info("Container / table option is ignored because container folder is defined");
@@ -101,23 +113,7 @@ public class App
       return new Handler(AdvancedExporter.Operation.NO_OPERATION , "");
     }
 
-    public static void main( String[] args ){
 
-      LOGGER.info("Welcome to Advanced Extractor");
-      Handler oper = parseArgument(args);
-      if( oper.getOper() == AdvancedExporter.Operation.NO_OPERATION){
-        System.exit(1);
-      }
-
-      AdvancedExporter exporter = new AdvancedExporter.Builder(".properties")
-                        .withOperation(oper.getOper())
-                        .withOperationName(oper.getOperationName())
-                        .build();
-
-      exporter.execute();
-
-
-    }
 
     private static void setOptions(Options options){
       options.addOption(Option.builder("h")
