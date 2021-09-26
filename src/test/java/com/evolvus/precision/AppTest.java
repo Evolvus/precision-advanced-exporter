@@ -1,6 +1,6 @@
 package com.evolvus.precision;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,14 +22,29 @@ public class AppTest
     }
 
     @Test
-    @DisplayName("Parse Arguments testing")
-    public void testParseArgument()
-    {
+    @DisplayName("Parse Arguments testing for table")
+    public void testParseArgument(){
+
         String[] args ={"-t=project_cr"};
         App.Handler oper = app.parseArgument(args);
-        if(oper.getOper() == AdvancedExporter.Operation.TABLE)
-          assertTrue(true);
-        else
-          assertTrue(false);
+        assertEquals(AdvancedExporter.Operation.TABLE, oper.getOper() ,
+               "Parse Arguement for Table should work");
+        assertEquals("project_cr", oper.getOperationName() ,
+               "Parse Arguement for Table should work with name");
+
+         args[0] ="-c=a.txt";
+         oper = app.parseArgument(args);
+         assertEquals(AdvancedExporter.Operation.CONTAINER, oper.getOper(),
+                "Parse Arguement for Container should work");
+         assertEquals("a.txt", oper.getOperationName() ,
+                "Parse Arguement for Container should work with name");
+
+        args[0] ="-f=container";
+        oper = app.parseArgument(args);
+        assertEquals(AdvancedExporter.Operation.CONTAINER_FOLDER, oper.getOper(),
+               "Parse Arguement for Container Folder should work");
+        assertEquals("container", oper.getOperationName() ,
+               "Parse Arguement for Container Folder should work with name");
+
     }
 }
