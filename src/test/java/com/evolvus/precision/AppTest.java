@@ -28,8 +28,8 @@ class AppTest
     void testParseArgument()
     {
         String[] args ={"-t=project_cr"};
-        // App.Handler oper = app.parseArgument(args);
-        if(app.parseArgument(args).getOper() == AdvancedExporter.Operation.TABLE)
+        App.Handler oper = app.parseArgument(args);
+        if(oper.getOper() == AdvancedExporter.Operation.TABLE)
           assertTrue(true);
         else
           assertTrue(false);
