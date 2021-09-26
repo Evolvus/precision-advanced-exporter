@@ -14,12 +14,40 @@ import org.slf4j.LoggerFactory;
 
 
 
+
+
 public class App
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private static final String EXTRACT_CONST = "extract";
 
-    public static void parseArgument(String[] args) {
+
+    private static class Handler{
+      private AdvancedExporter.Operation  oper;
+      private String operationName;
+
+      public Handler(AdvancedExporter.Operation  oper,String operationName){
+        this.oper = oper;
+        this.operationName = operationName;
+      }
+
+      public void setOper(AdvancedExporter.Operation  oper){
+        this.oper = oper;
+      }
+
+      public void setOperationName(String operationName){
+        this.operationName = operationName;
+      }
+
+      public AdvancedExporter.Operation getOper(){
+        return this.oper;
+      }
+      public String getOperationName(){
+        return this.operationName;
+      }
+    }
+
+    public static Handler parseArgument(String[] args) {
       Options options = new Options();
 
       try{
@@ -36,33 +64,32 @@ public class App
           printDefault("Help Requested",options);
         }
 
-        AdvancedExporter exporter = new AdvancedExporter(".properties");
+        //AdvancedExporter exporter = new AdvancedExporter(".properties");
 
         if(cmd.getOptions().length == 0){
           LOGGER.info("No argument supplied. Container from properties file will be used");
-          exporter.processContainerLocation();
-          System.exit(0);
+          //exporter.processContainerLocation();
+          return new Handler(AdvancedExporter.Operation.CONTAINER_FOLDER , "");
+
         }
         if (cmd.hasOption("f")) {
-            String containerFolder = cmd.getOptionValue("f");
+
             if (cmd.hasOption("c") || cmd.hasOption("t")) {
                 LOGGER.info("Container / table option is ignored because container folder is defined");
             }
-            exporter.processContainerLocation(containerFolder);
-            System.exit(0);
+            //exporter.processContainerLocation(containerFolder);
+            return new Handler(AdvancedExporter.Operation.CONTAINER_FOLDER , cmd.getOptionValue("f"));
 
         } else if (cmd.hasOption("c")) {
-          String container = cmd.getOptionValue("c");
             if (cmd.hasOption("t")) {
                 LOGGER.info("Table option is omitted because container is defined");
             }
-            exporter.processContainer(container);
-            System.exit(0);
+            //exporter.processContainer(container);
+            return new Handler(AdvancedExporter.Operation.CONTAINER , cmd.getOptionValue("c"));
 
         } else if (cmd.hasOption("t")) {
-          String table = cmd.getOptionValue("t");
-          exporter.exportData(table);
-          System.exit(0);
+          //exporter.exportData(table);
+          return new Handler(AdvancedExporter.Operation.TABLE , cmd.getOptionValue("t"));
 
         } else {
           printDefault("Invalid Option",options);
@@ -71,12 +98,24 @@ public class App
       } catch (ParseException pe) {
         printDefault("Invalid Option",options);
       }
+      return new Handler(AdvancedExporter.Operation.NO_OPERATION , "");
     }
 
     public static void main( String[] args ){
 
       LOGGER.info("Welcome to Advanced Extractor");
-      parseArgument(args);
+      Handler oper = parseArgument(args);
+      if( oper.getOper() == AdvancedExporter.Operation.NO_OPERATION){
+        System.exit(1);
+      }
+
+      AdvancedExporter exporter = new AdvancedExporter.Builder(".properties")
+                        .withOperation(oper.getOper())
+                        .withOperationName(oper.getOperationName())
+                        .build();
+
+      exporter.execute();
+
 
     }
 
@@ -115,6 +154,5 @@ public class App
       LOGGER.info(message);
       HelpFormatter formatter = new HelpFormatter();
       formatter.printHelp( EXTRACT_CONST, options );
-      System.exit(1);
     }
 }

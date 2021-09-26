@@ -52,9 +52,60 @@ Precision 100 Advanced Exporter
  */
 public class AdvancedExporter {
 
+  public enum Operation {
+    TABLE,
+    CONTAINER,
+    CONTAINER_FOLDER,
+    NO_OPERATION
+  }
+
+
+
+
+
+   public static class Builder {
+
+
+     private String propertiesFile;
+     private Operation operation;
+     private String operationName;
+
+     public Builder(String propertiesFile) {
+       this.propertiesFile = propertiesFile;
+     }
+
+     public Builder withOperation(Operation operation){
+            this.operation = operation;
+            return this;
+     }
+
+     public Builder withOperationName(String operationName){
+            this.operationName = operationName;
+            return this;
+     }
+
+     public AdvancedExporter build(){
+
+       AdvancedExporter exporter = new AdvancedExporter(this.propertiesFile);
+       exporter.operation = this.operation;
+       exporter.operationName = this.operationName;
+       LOGGER.info("Building with properties file {} operation {} operation name {}",this.propertiesFile, exporter.operation.toString(),  exporter.operationName);
+       return exporter;
+
+     }
+
+
+
+   }
+
 
    private static final Logger LOGGER = LoggerFactory.getLogger(AdvancedExporter.class);
    private static Marker impMarker = MarkerFactory.getMarker("IMPORTANT");
+
+
+    //Execution context
+    private Operation operation;
+    private String operationName;
 
 
     //Output
@@ -79,7 +130,7 @@ public class AdvancedExporter {
 
 
 
-    public AdvancedExporter(String config){
+    private AdvancedExporter(String config){
       try (InputStream input = new FileInputStream(config)) {
 
           Properties prop = new Properties();
@@ -113,7 +164,23 @@ public class AdvancedExporter {
       }
     }
 
+    public void execute(){
 
+      if(operation == Operation.TABLE){
+        exportData(operationName);
+      }
+      if(operation == Operation.CONTAINER){
+        processContainer(operationName);
+      }
+      if(operation == Operation.CONTAINER_FOLDER){
+        if(operationName.isEmpty())
+            processContainerLocation();
+        else
+            processContainerLocation(operationName);
+      }
+
+
+    }
 
     private long fileCount(String file){
       long rec = 0;
@@ -130,7 +197,7 @@ public class AdvancedExporter {
 
     }
 
-    public void exportData(String table) {
+    private void exportData(String table) {
       String csvFileName = getFileName(table);
       String sql = "SELECT * FROM ".concat(table);
       long rec = 0;
@@ -182,11 +249,11 @@ public class AdvancedExporter {
     }
 
 
-    public void processContainerLocation() {
+    private void processContainerLocation() {
       processContainerLocation(containerLocation);
     }
 
-    public void processContainerLocation(String loc){
+    private void processContainerLocation(String loc){
 
       if(loc == null || !Files.exists(Paths.get(loc)) || !Files.isDirectory(Paths.get(loc))){
         LOGGER.error("Container folder does not exist  {} ",loc);
@@ -212,7 +279,7 @@ public class AdvancedExporter {
     }
 
     //This method demostrates the beauty of functional programming
-    public void processContainer(String container){
+    private void processContainer(String container){
       AtomicLong count = new AtomicLong();
       LOGGER.info("Started processing Container File {}",container);
       try (
