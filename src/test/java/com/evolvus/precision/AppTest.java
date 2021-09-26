@@ -11,11 +11,9 @@ import org.junit.jupiter.api.Test;
 /**
  * Unit test for simple App.
  */
-class AppTest
+public class AppTest
 {
-    /**
-     * Rigorous Test :-)
-     */
+
     App app;
 
     @BeforeEach
@@ -25,7 +23,7 @@ class AppTest
 
     @Test
     @DisplayName("Parse Arguments testing")
-    void testParseArgument()
+    public void testParseArgument()
     {
         String[] args ={"-t=project_cr"};
         App.Handler oper = app.parseArgument(args);
