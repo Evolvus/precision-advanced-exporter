@@ -22,7 +22,7 @@ public class App
     private static final String EXTRACT_CONST = "extract";
 
 
-    private static class Handler{
+    public static class Handler{
       private AdvancedExporter.Operation  oper;
       private String operationName;
 
@@ -51,6 +51,7 @@ public class App
     public static void main( String[] args ){
 
       LOGGER.info("Welcome to Advanced Extractor");
+
       Handler oper = parseArgument(args);
       if( oper.getOper() == AdvancedExporter.Operation.NO_OPERATION){
         System.exit(1);
