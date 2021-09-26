@@ -131,7 +131,7 @@ public class AdvancedExporter {
 
 
     private AdvancedExporter(String config){
-      try (InputStream input = new FileInputStream(config)) {
+      try (InputStream input = getClass().getResourceAsStream("/"+config)) {
 
           Properties prop = new Properties();
 

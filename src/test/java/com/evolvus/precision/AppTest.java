@@ -46,5 +46,18 @@ public class AppTest
         assertEquals("container", oper.getOperationName() ,
                "Parse Arguement for Container Folder should work with name");
 
+         args[0] ="junkvalues";
+         oper = app.parseArgument(args);
+         assertEquals(AdvancedExporter.Operation.NO_OPERATION, oper.getOper(),
+                "Parse Arguement for Container Folder should work");
+
+
+    }
+
+    @Test
+    @DisplayName("Parse Arguments testing for table")
+    public void testMain(){
+      String[] args ={"-t=project_cr"};
+      app.main(args);
     }
 }
