@@ -19,10 +19,7 @@ public class App
     private static final Logger LOGGER = LoggerFactory.getLogger(App.class);
     private static final String EXTRACT_CONST = "extract";
 
-    public static void main( String[] args ){
-
-      LOGGER.info("Welcome to Advanced Extractor");
-
+    public static void parseArgument(String[] args) {
       Options options = new Options();
 
       try{
@@ -66,7 +63,7 @@ public class App
           String table = cmd.getOptionValue("t");
           exporter.exportData(table);
           System.exit(0);
-          
+
         } else {
           printDefault("Invalid Option",options);
         }
@@ -74,7 +71,12 @@ public class App
       } catch (ParseException pe) {
         printDefault("Invalid Option",options);
       }
+    }
 
+    public static void main( String[] args ){
+
+      LOGGER.info("Welcome to Advanced Extractor");
+      parseArgument(args);
 
     }
 
