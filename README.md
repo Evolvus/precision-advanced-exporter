@@ -2,6 +2,7 @@
 
 # Advanced Exporter
 Exports table data to delimiter separated file.
+This is good
 
 ## Usage
 
